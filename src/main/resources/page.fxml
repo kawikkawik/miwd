@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.ApplicationController">
+   <children>
+      <Button fx:id="start" layoutX="224.0" layoutY="106.0" mnemonicParsing="false" onAction="#startAlgorithm" text="Start" />
+      <TextArea fx:id="output" layoutX="3.0" layoutY="145.0" prefHeight="165.0" prefWidth="272.0" />
+      <TextField fx:id="iter" layoutX="75.0" layoutY="14.0" />
+      <TextField fx:id="ps" layoutX="75.0" layoutY="39.0" />
+      <TextField fx:id="pw" layoutX="75.0" layoutY="64.0" />
+      <Label layoutX="3.0" layoutY="18.0" prefHeight="17.0" prefWidth="70.0" text="Iterations" />
+      <Label layoutX="3.0" layoutY="43.0" text="Ps" />
+      <Label layoutX="3.0" layoutY="68.0" text="Pw" />
+      <CheckBox fx:id="searchForPsPw" layoutX="2.0" layoutY="98.0" mnemonicParsing="false" text="Ps&amp;Pw" />
+   </children>
+</Pane>
