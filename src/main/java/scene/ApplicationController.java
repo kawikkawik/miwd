@@ -126,12 +126,19 @@ public class ApplicationController {
         if (!searchForPsPw.isSelected()) {
             controller.getBacktest().setPs(BigDecimal.valueOf(Double.valueOf(ps.getText()) / 100d));
             controller.getBacktest().setPw(BigDecimal.valueOf(Double.valueOf(pw.getText()) / 100d));
+            testController.getBacktest().setPs(BigDecimal.valueOf(Double.valueOf(ps.getText()) / 100d));
+            testController.getBacktest().setPw(BigDecimal.valueOf(Double.valueOf(pw.getText()) / 100d));
         }
         controller.setMAX_ITERATIONS(Integer.valueOf(iter.getText()));
         controller.setPOPULATION_SIZE(Integer.valueOf(populationSize.getText()));
         controller.setELITE_CREATURES_NUMBER(Integer.valueOf(eliteSize.getText()));
         controller.setMUTATION_PROPABILITY(Double.valueOf(mutationP.getText()));
         controller.setCROSS_PROPABILITY(Double.valueOf(crossP.getText()));
+        testController.setMAX_ITERATIONS(Integer.valueOf(iter.getText()));
+        testController.setPOPULATION_SIZE(Integer.valueOf(populationSize.getText()));
+        testController.setELITE_CREATURES_NUMBER(Integer.valueOf(eliteSize.getText()));
+        testController.setMUTATION_PROPABILITY(Double.valueOf(mutationP.getText()));
+        testController.setCROSS_PROPABILITY(Double.valueOf(crossP.getText()));
 
     }
 }

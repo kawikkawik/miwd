@@ -28,9 +28,9 @@ public class GAControllerImpl implements GenethicAlgorithmController {
         output.appendText("Amount on Beginning: " + population.getTotalAmount() + "\n");
         output.appendText("Best one: " + population.findBest().getBacktestValue() + "\n");
 
-        int count;
+
         for (int index = 0; index < MAX_ITERATIONS; index++) {
-            count = 0;
+            int count = 0;
 
             for (int i = 0; i < population.getELITE_CREATURES_NUMBER(); ++i, count++) {
                 creatures[count] = population.findBest();
