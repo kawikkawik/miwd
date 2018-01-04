@@ -1,17 +1,12 @@
 package scene;
 
-import backtest.Backtest;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import learn.GenethicAlgorithmController;
 
-import javax.swing.text.Document;
-import java.io.PrintStream;
 import java.math.BigDecimal;
 
 
@@ -59,7 +54,7 @@ public class ApplicationController {
         }
 
         output.setText("Algorithm started, please wait for end\n");
-        Platform.runLater(new Runnable() {
+        Thread t = new Thread() {
             public void run() {
                 int normal;
                 int test;
@@ -70,12 +65,13 @@ public class ApplicationController {
                     normal = controller.performGenethicAlgorithm();
                     test = testController.performGenethicAlgorithm();
                 }
+                unblock();
                 output.appendText("E from normal data: " + normal + "\n");
                 output.appendText("E from test data: " + test + "\n");
                 output.appendText("Algorithm ended\n");
             }
-        });
-        unblock();
+        };
+        t.start();
     }
 
     public void setGaController(GenethicAlgorithmController controller) {
@@ -95,7 +91,10 @@ public class ApplicationController {
         ps.setDisable(true);
         pw.setDisable(true);
         searchForPsPw.setDisable(true);
-
+        populationSize.setDisable(true);
+        eliteSize.setDisable(true);
+        mutationP.setDisable(true);
+        crossP.setDisable(true);
     }
 
     private void unblock() {
@@ -104,6 +103,10 @@ public class ApplicationController {
         ps.setDisable(false);
         pw.setDisable(false);
         searchForPsPw.setDisable(false);
+        populationSize.setDisable(false);
+        eliteSize.setDisable(false);
+        mutationP.setDisable(false);
+        crossP.setDisable(false);
     }
 
     private void validateAndSet() throws NumberFormatException {

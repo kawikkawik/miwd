@@ -7,10 +7,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.ApplicationController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.ApplicationController">
    <children>
       <Button fx:id="start" layoutX="125.0" layoutY="120.0" mnemonicParsing="false" onAction="#startAlgorithm" text="Start" />
-      <TextArea fx:id="output" layoutX="3.0" layoutY="155.0" prefHeight="155.0" prefWidth="272.0" />
+      <TextArea fx:id="output" layoutX="3.0" layoutY="155.0" prefHeight="442.0" prefWidth="272.0" />
       <TextField fx:id="iter" layoutX="75.0" layoutY="14.0" prefHeight="25.0" prefWidth="70.0" />
       <TextField fx:id="ps" layoutX="75.0" layoutY="39.0" prefHeight="25.0" prefWidth="70.0" />
       <TextField fx:id="pw" layoutX="75.0" layoutY="64.0" prefHeight="25.0" prefWidth="70.0" />
