@@ -3,6 +3,7 @@ package learn;
 import backtest.Backtest;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Creature {
@@ -11,11 +12,11 @@ public class Creature {
     //genotyp
     private int genotype[] = new int[SIZE];
     //wartość E
-    private int E;
+    protected int E;
     //wartość backtestingu dla E
-    private double backtestValue;
+    protected double backtestValue;
     //Obiekt do testowania
-    private Backtest backtest;
+    protected Backtest backtest;
 
     public Creature(Backtest backtest) {
         this.backtest = backtest;
@@ -91,4 +92,14 @@ public class Creature {
         return genotype[index];
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Creature toReturn = new Creature(backtest);
+        for(int i = 0; i < SIZE; i++){
+            toReturn.genotype[i] = genotype[i];
+        }
+        toReturn.E = E;
+        toReturn.backtestValue = backtestValue;
+        return toReturn;
+    }
 }

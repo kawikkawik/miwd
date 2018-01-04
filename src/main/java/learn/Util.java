@@ -31,4 +31,33 @@ public class Util {
         }
         return newCreatures;
     }
+
+    public static ExtendedCreature[] crossOver(ExtendedCreature one, ExtendedCreature two, Backtest backtest) {
+        Random rand = new Random();
+        ExtendedCreature[] newCreatures = new ExtendedCreature[2];
+
+        newCreatures[0] = new ExtendedCreature(backtest);
+        newCreatures[1] = new ExtendedCreature(backtest);
+
+        int randomPoint = rand.nextInt(Creature.SIZE);
+        int index;
+        for(index = 0; index < randomPoint; ++index){
+            newCreatures[0].setGene(index, one.getGene(index));
+            newCreatures[0].setPsGenotype(index, one.getPsGenotype(index));
+            newCreatures[0].setPwGenotype(index, one.getPwGenotype(index));
+            newCreatures[1].setGene(index, two.getGene(index));
+            newCreatures[1].setPsGenotype(index, two.getPsGenotype(index));
+            newCreatures[1].setPwGenotype(index, two.getPwGenotype(index));
+        }
+        for(; index < Creature.SIZE; ++index){
+            newCreatures[0].setGene(index, two.getGene(index));
+            newCreatures[0].setPsGenotype(index, two.getPsGenotype(index));
+            newCreatures[0].setPwGenotype(index, two.getPwGenotype(index));
+            newCreatures[1].setGene(index, one.getGene(index));
+            newCreatures[1].setPsGenotype(index, one.getPsGenotype(index));
+            newCreatures[1].setPwGenotype(index, one.getPwGenotype(index));
+        }
+
+        return newCreatures;
+    }
 }

@@ -6,35 +6,51 @@ import java.util.Random;
 
 public class CreaturesPopulation {
     //ilość istot elitarnych
-    public static final int ELITE_CREATURES_NUMBER = 5;
+    protected int ELITE_CREATURES_NUMBER;
     //wielkość populacji
-    public static final int POPULATION_SIZE = 200 + ELITE_CREATURES_NUMBER;
+    protected int POPULATION_SIZE;
     //prawdopodobieństwo mutacji
-    public static final double MUTATION_PROPABILITY = 0.6;
+    protected double MUTATION_PROPABILITY;
     //prawdopodobieństwo skrzyżowania
-    public static final double CROSS_PROPABILITY = 0.7;
-    private final Random rand = new Random();
-    private Creature[] population;
-    private double totalAmount;
+    protected double CROSS_PROPABILITY;
+    protected final Random rand = new Random();
+    protected Creature[] population;
+    protected double totalAmount;
 
-    public CreaturesPopulation(Backtest backtest){
-        population  = new Creature[POPULATION_SIZE];
-        for (int i = 0; i < POPULATION_SIZE; i++){
+    public CreaturesPopulation() {
+    }
+
+    public CreaturesPopulation(Backtest backtest, int populationSize, int eliteCreaturesSize, double mutationP,
+                               double crossP) {
+        this.ELITE_CREATURES_NUMBER = eliteCreaturesSize;
+        this.POPULATION_SIZE = populationSize;
+        this.MUTATION_PROPABILITY = mutationP;
+        this.CROSS_PROPABILITY = crossP;
+
+        population = new Creature[POPULATION_SIZE];
+        for (int i = 0; i < POPULATION_SIZE; i++) {
             population[i] = new Creature(backtest);
         }
 
         this.evaluate();
     }
 
-    public void setPopulation(Creature[] creatures){
-        System.arraycopy(creatures, 0, population, 0, POPULATION_SIZE);
+    public void setPopulation(Creature[] creatures) {
+
+        for (int i = 0; i < creatures.length; i++) {
+            try {
+                population[i] = (Creature) creatures[i].clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Creature[] getPopulation() {
         return population;
     }
 
-    public double evaluate(){
+    public double evaluate() {
         this.totalAmount = 0.0;
         for (int i = 0; i < POPULATION_SIZE; i++) {
             this.totalAmount += population[i].evaluate();
@@ -42,12 +58,12 @@ public class CreaturesPopulation {
         return this.totalAmount;
     }
 
-    public Creature findBest(){
+    public Creature findBest() {
         int indexMax = 0;
         double currentMax = 0.0;
         double currentVal;
 
-        for(int index = 0; index < POPULATION_SIZE; ++index){
+        for (int index = 0; index < POPULATION_SIZE; ++index) {
 
             currentVal = population[index].getBacktestValue();
 
@@ -59,11 +75,11 @@ public class CreaturesPopulation {
         return population[indexMax];
     }
 
-    public Creature getRandomCreature(){
+    public Creature getRandomCreature() {
         double randomNumber = rand.nextDouble() * this.totalAmount;
         int index;
 
-        for(index = 0; index < POPULATION_SIZE && randomNumber > 0; index++){
+        for (index = 0; index < POPULATION_SIZE && randomNumber > 0; index++) {
             randomNumber -= population[index].getBacktestValue();
         }
 
@@ -72,5 +88,21 @@ public class CreaturesPopulation {
 
     public double getTotalAmount() {
         return totalAmount;
+    }
+
+    public int getELITE_CREATURES_NUMBER() {
+        return ELITE_CREATURES_NUMBER;
+    }
+
+    public int getPOPULATION_SIZE() {
+        return POPULATION_SIZE;
+    }
+
+    public double getMUTATION_PROPABILITY() {
+        return MUTATION_PROPABILITY;
+    }
+
+    public double getCROSS_PROPABILITY() {
+        return CROSS_PROPABILITY;
     }
 }

@@ -26,6 +26,14 @@ public class ApplicationController {
     @FXML
     private TextField pw;
     @FXML
+    private TextField populationSize;
+    @FXML
+    private TextField eliteSize;
+    @FXML
+    private TextField mutationP;
+    @FXML
+    private TextField crossP;
+    @FXML
     private CheckBox searchForPsPw;
     @FXML
     private Button start;
@@ -42,27 +50,31 @@ public class ApplicationController {
     private void startAlgorithm() {
         block();
         try {
-            if (!searchForPsPw.isSelected()) {
-                controller.getBacktest().setPs(BigDecimal.valueOf(Double.valueOf(ps.getText())));
-                controller.getBacktest().setPw(BigDecimal.valueOf(Double.valueOf(pw.getText())));
-            }
-            controller.setMAX_ITERATIONS(Integer.valueOf(iter.getText()));
+            validateAndSet();
         } catch (NumberFormatException e) {
             output.setText("Insert proper values");
+//            e.printStackTrace();
+            unblock();
             return;
         }
 
         output.setText("Algorithm started, please wait for end\n");
-        if (searchForPsPw.isSelected()) {
-
-        } else {
-            int normal = controller.performGenethicAlgorithm();
-            int test = testController.performGenethicAlgorithm();
-
-            output.appendText("From normal data: " + normal + "\n");
-            output.appendText("From test data: " + test + "\n");
-        }
-        output.appendText("Algorithm ended\n");
+        Platform.runLater(new Runnable() {
+            public void run() {
+                int normal;
+                int test;
+                if (searchForPsPw.isSelected()) {
+                    normal = controller.performExtendedGenethicAlgorithm();
+                    test = testController.performExtendedGenethicAlgorithm();
+                } else {
+                    normal = controller.performGenethicAlgorithm();
+                    test = testController.performGenethicAlgorithm();
+                }
+                output.appendText("E from normal data: " + normal + "\n");
+                output.appendText("E from test data: " + test + "\n");
+                output.appendText("Algorithm ended\n");
+            }
+        });
         unblock();
     }
 
@@ -92,5 +104,34 @@ public class ApplicationController {
         ps.setDisable(false);
         pw.setDisable(false);
         searchForPsPw.setDisable(false);
+    }
+
+    private void validateAndSet() throws NumberFormatException {
+        if (!searchForPsPw.isSelected()) {
+            if (Double.valueOf(ps.getText()) < 0 || Double.valueOf(pw.getText()) < 0)
+                throw new NumberFormatException();
+        }
+        if (Integer.valueOf(iter.getText()) < 0)
+            throw new NumberFormatException();
+        if (Integer.valueOf(populationSize.getText()) < 0)
+            throw new NumberFormatException();
+        if (Integer.valueOf(eliteSize.getText()) < 0)
+            throw new NumberFormatException();
+
+        if (Double.valueOf(mutationP.getText()) < 0 || Double.valueOf(mutationP.getText()) > 1)
+            throw new NumberFormatException();
+        if (Double.valueOf(crossP.getText()) < 0 || Double.valueOf(crossP.getText()) > 1)
+            throw new NumberFormatException();
+
+        if (!searchForPsPw.isSelected()) {
+            controller.getBacktest().setPs(BigDecimal.valueOf(Double.valueOf(ps.getText()) / 100d));
+            controller.getBacktest().setPw(BigDecimal.valueOf(Double.valueOf(pw.getText()) / 100d));
+        }
+        controller.setMAX_ITERATIONS(Integer.valueOf(iter.getText()));
+        controller.setPOPULATION_SIZE(Integer.valueOf(populationSize.getText()));
+        controller.setELITE_CREATURES_NUMBER(Integer.valueOf(eliteSize.getText()));
+        controller.setMUTATION_PROPABILITY(Double.valueOf(mutationP.getText()));
+        controller.setCROSS_PROPABILITY(Double.valueOf(crossP.getText()));
+
     }
 }

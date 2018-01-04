@@ -35,6 +35,12 @@ public class BacktestResolver implements Backtest {
         return result;
     }
 
+    public BigDecimal getValueOfProfit(Integer E, double ps, double pw) {
+        Ps = BigDecimal.valueOf(ps);
+        Pw = BigDecimal.valueOf(pw);
+        return getValueOfProfit(E);
+    }
+
     public void setPs(BigDecimal ps) {
         Ps = ps;
     }
